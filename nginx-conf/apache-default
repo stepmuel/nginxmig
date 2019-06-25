@@ -1,0 +1,9 @@
+server {
+    listen 81 default_server;
+    server_name _;
+    location / {
+        include snippets/proxy-nobuff.conf;
+        proxy_read_timeout 1h;
+        proxy_pass http://localhost:85;
+    }
+}

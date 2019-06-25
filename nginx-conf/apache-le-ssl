@@ -1,0 +1,16 @@
+server {
+    server_name {$name};
+    location / {
+        include snippets/proxy-nobuff.conf;
+        proxy_read_timeout 1h;
+        proxy_pass http://localhost:85;
+    }
+
+    listen 81; # managed by Certbot
+
+    listen 444 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/{$name}/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/{$name}/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
